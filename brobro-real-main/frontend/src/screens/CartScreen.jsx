@@ -43,7 +43,7 @@ function CartScreen() {
   };
 
   const checkOutHandler = () => {
-    navigate("/login?redirect=shipping");
+    navigate("/shipping");
   };
 
   return (
@@ -121,6 +121,7 @@ function CartScreen() {
                 >
                   Proceed To Checkout
                 </Button>
+                
               </Row>
             </ListGroup.Item>
           </ListGroup>

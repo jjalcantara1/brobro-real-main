@@ -5,12 +5,13 @@ import Rating from '../components/Rating';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../actions/cartActions';
-
+import { useNavigate} from 'react-router-dom';
 
 function ProductScreen() {
   const { id } = useParams();
   const [product, setProduct] = useState([])
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const qty = 1
 
@@ -27,6 +28,9 @@ const addToCartHandler = () => {
   fetchProduct();
 }, [id]);
 
+const handleGoToShipping= () => { 
+  navigate('/cart');
+}
 
   return (
     <Row>
@@ -74,6 +78,14 @@ const addToCartHandler = () => {
                             >
                                 Add to Cart
                             </Button>
+                            <Button 
+                            onClick={handleGoToShipping}
+                            className="btn-block"
+                            type="button"
+                            disabled={product.countInStock === 0}
+                        >
+                            Checkout
+                        </Button>
                         </Row>
                     </ListGroup.Item>
             </ListGroup>
