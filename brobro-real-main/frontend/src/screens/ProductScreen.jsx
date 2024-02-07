@@ -3,7 +3,8 @@ import { Link, useParams } from 'react-router-dom';
 import { Row, Col, Image, ListGroup, Button, Card, ListGroupItem } from 'react-bootstrap';
 import Rating from '../components/Rating';
 import axios from 'axios';
-// import products from '../products';
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../actions/cartActions';
 
 
 function ProductScreen() {
@@ -11,8 +12,10 @@ function ProductScreen() {
   const [product, setProduct] = useState([])
   const dispatch = useDispatch();
 
+  const qty = 1
+
 const addToCartHandler = () => {
-    dispatch(addToCart(productId, qty));
+    dispatch(addToCart(id, qty));
 };
 
   useEffect(() => {
