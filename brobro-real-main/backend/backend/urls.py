@@ -24,7 +24,7 @@ from base.views import UserLoginView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('base.urls')),
-    path('api/users/login/', UserLoginView.as_view(), name='user-login'),
+    path('api/users/login/', UserLoginView.as_view(), name='login'),
 
 ]
 

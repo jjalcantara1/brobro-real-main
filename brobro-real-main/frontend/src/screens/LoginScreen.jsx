@@ -14,11 +14,14 @@ function LoginScreen() {
   const navigate = useNavigate();
 
   const userLogin = useSelector((state) => state.userLogin);
-  const { loading, error, userInfo } = userLogin;
+
+  const loading = userLogin && userLogin.loading;
+  const error = userLogin && userLogin.error;
+  const userInfo = userLogin && userLogin.userInfo;
 
   useEffect(() => {
     if (userInfo) {
-      navigate('/');
+      navigate('/home');
     }
   }, [navigate, userInfo]);
 

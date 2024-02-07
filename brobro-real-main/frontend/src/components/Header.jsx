@@ -1,8 +1,18 @@
 import React from 'react';
 import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { logout } from '../actions/userActions';
 
 function Header() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate('/'); 
+  };
+
   return (
     <Navbar className="navbar-expand-lg bg-dark" expand="lg" variant="dark" collapseOnSelect>
       <Container>
@@ -10,11 +20,11 @@ function Header() {
         <Navbar.Toggle aria-controls="navbarColor02" />
         <Navbar.Collapse id="navbarColor02">
           <Nav className="me-auto">
-            <Nav.Link href="/cart"><i className='fas fa-shopping-cart'></i>
+            <Nav.Link as={Link} to="/cart"><i className='fas fa-shopping-cart'></i>
                 Cart
               <span className="visually-hidden">(current)</span>
             </Nav.Link>
-            <Nav.Link href="/user"><i className='fas fa-user'></i>
+            <Nav.Link as={Link} to="/user"><i className='fas fa-user'></i>
                 User
             </Nav.Link>
             <NavDropdown title="Options" id="basic-nav-dropdown" className="nav-item dropdown">
@@ -39,6 +49,7 @@ function Header() {
               Search
             </button>
           </form>
+          <button className="btn btn-secondary" onClick={handleLogout}>Logout</button>
         </Navbar.Collapse>
       </Container>
     </Navbar>
