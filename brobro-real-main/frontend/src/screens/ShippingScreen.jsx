@@ -4,6 +4,8 @@ import { saveShippingAddress } from '../actions/cartActions';
 import { loadShippingAddress } from '../actions/cartActions';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Container, Form, Button, Row, Col } from 'react-bootstrap';
+
 
 
 function ShippingScreen({ history }) {
@@ -34,18 +36,72 @@ function ShippingScreen({ history }) {
         e.preventDefault();
         dispatch(saveShippingAddress({ address, city, postalCode, country }));
         localStorage.setItem('shippingAddress', JSON.stringify({ address, city, postalCode, country }));
-        navigate('/payment');
       };
-      
-    return (
-        <form onSubmit={submitHandler}>
-            <input type="text" placeholder="Address" value={address} onChange={(e) => setAddress(e.target.value)} required />
-            <input type="text" placeholder="City" value={city} onChange={(e) => setCity(e.target.value)} required />
-            <input type="text" placeholder="Postal Code" value={postalCode} onChange={(e) => setPostalCode(e.target.value)} required />
-            <input type="text" placeholder="Country" value={country} onChange={(e) => setCountry(e.target.value)} required />
-            <button type="submit">Continue</button>
-        </form>
-    );
-}
+      const nextStep = () => {
+          navigate('/payment');
+      }
+
+      return (
+        <Container>
+          <Row className="justify-content-md-center">
+            <Col xs={12} md={6}>
+              <h1>Shipping Address</h1>
+              <Form onSubmit={submitHandler}>
+                <Form.Group controlId="address">
+                  <Form.Label>Address</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter address"
+                    value={address}
+                    required
+                    onChange={(e) => setAddress(e.target.value)}
+                  ></Form.Control>
+                </Form.Group>
+    
+                <Form.Group controlId="city">
+                  <Form.Label>City</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter city"
+                    value={city}
+                    required
+                    onChange={(e) => setCity(e.target.value)}
+                  ></Form.Control>
+                </Form.Group>
+    
+                <Form.Group controlId="postalCode">
+                  <Form.Label>Postal Code</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter postal code"
+                    value={postalCode}
+                    required
+                    onChange={(e) => setPostalCode(e.target.value)}
+                  ></Form.Control>
+                </Form.Group>
+    
+                <Form.Group controlId="country">
+                  <Form.Label>Country</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter country"
+                    value={country}
+                    required
+                    onChange={(e) => setCountry(e.target.value)}
+                  ></Form.Control>
+                </Form.Group>
+    
+                <Button variant="primary" type="submit">
+                  Save
+                </Button>
+                <Button variant="secondary" onClick={submitHandler} className="ml-2">
+                  Continue
+                </Button>
+              </Form>
+            </Col>
+          </Row>
+        </Container>
+      );
+    }
 
 export default ShippingScreen;

@@ -19,10 +19,13 @@ from django.urls import path, include
 from base import views
 from django.conf import settings
 from django.conf.urls.static import static
+from base.views import UserLoginView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('base.urls')),
+    path('api/users/login/', UserLoginView.as_view(), name='user-login'),
+
 ]
 
 if settings.DEBUG:
