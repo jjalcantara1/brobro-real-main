@@ -15,6 +15,8 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from rest_framework import generics
+
 
 
 
@@ -144,3 +146,35 @@ def registerUser(request):
         message = {'detail': 'User with this email already exists'}
         return Response(message, status=status.HTTP_400_BAD_REQUEST)
     
+
+
+@csrf_exempt
+def user_login(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            # User authentication successful
+            return JsonResponse({'message': 'Login successful'}, status=status.HTTP_200_OK)
+        else:
+            # Invalid credentials
+            return JsonResponse({'error': 'Invalid credentials'}, status=status.HTTP_400_BAD_REQUEST)
+    else:
+        # Method not allowed
+        return JsonResponse({'error': 'Method not allowed'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+    
+class UserShippingAddressView(APIView):
+    def get(self, request, user_id):
+        try:
+            # Retrieve the shipping address for the specified user ID
+            shipping_address = ShippingAddress.objects.get(user_id=user_id)
+            # Serialize the shipping address data
+            serializer = ShippingAddressSerializer(shipping_address)
+            # Return the serialized data as JSON response
+            return Response(serializer.data)
+        except ShippingAddress.DoesNotExist:
+            # If shipping address does not exist for the user, return 404 Not Found
+            return Response({'detail': 'Shipping address not found'}, status=status.HTTP_404_NOT_FOUND)

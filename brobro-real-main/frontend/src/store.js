@@ -21,6 +21,7 @@ const reducer = combineReducers({
   const initialState = {
     cart: { cartItems: cartItemsFromStorage },
     userLogin: { userInfo: userInfoFromStorage },
+    
   };
   
   

@@ -41,6 +41,35 @@ export const saveShippingAddress = (data) => async (dispatch, getState) => {
   await axios.post('/api/save-shipping/', { ...data, user: userInfo._id });
 };
 
+// export const loadShippingAddress = () => async (dispatch, getState) => {
+//   try {
+//     const {
+//       userLogin: { userInfo },
+//     } = getState();
+
+//     if (!userInfo) {
+    
+//       return;
+//     }
+
+
+//     const config = {
+//       headers: {
+//         Authorization: `Bearer ${userInfo.token}`,
+//       },
+//     };
+
+//     const { data } = await axios.get(`/api/users/${userInfo._id}/shipping/`, config);
+
+//     dispatch({
+//       type: CART_LOAD_SHIPPING_ADDRESS,
+//       payload: data,
+//     });
+//   } catch (error) {
+//     console.error('Error loading shipping address:', error.message);
+//   }
+// };
+
 export const loadShippingAddress = () => (dispatch) => {
   const shippingAddressFromStorage = localStorage.getItem('shippingAddress')
     ? JSON.parse(localStorage.getItem('shippingAddress'))
@@ -50,4 +79,4 @@ export const loadShippingAddress = () => (dispatch) => {
     type: CART_LOAD_SHIPPING_ADDRESS,
     payload: shippingAddressFromStorage,
   });
-};
+  };

@@ -1,11 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { Row, Col, Image, ListGroup, Button, Card, ListGroupItem } from 'react-bootstrap';
+import { Row, Col, Image, ListGroup, Card, ListGroupItem, Form } from 'react-bootstrap';
 import Rating from '../components/Rating';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../actions/cartActions';
 import { useNavigate} from 'react-router-dom';
+import {
+  Box,
+  Paper,
+  Typography,
+  List,
+  ListItem,
+  Grid,
+  Divider,
+  Button,
+} from "@mui/material";
+
 
 function ProductScreen() {
   const { id } = useParams();
@@ -13,7 +24,8 @@ function ProductScreen() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const qty = 1
+  const [qty, setQty] = useState(1);
+
 
 const addToCartHandler = () => {
     dispatch(addToCart(id, qty));
@@ -70,14 +82,44 @@ const handleGoToShipping= () => {
                 </ListGroup.Item>
                     <ListGroup.Item>
                         <Row>
-                            <Button 
-                                onClick={addToCartHandler}
-                                className="btn-block"
-                                type="button"
-                                disabled={product.countInStock === 0}
+                        <ListItem>
+                        <Grid container spacing={0}>
+                          <Grid item xs={6} sm={6} className="py-2">
+                            Qty:
+                          </Grid>
+                          <Grid item xs={6} sm={6}>
+                            <Form.Control
+                              as="select"
+                              value={qty}
+                              onChange={(e) => setQty(e.target.value)}
                             >
-                                Add to Cart
+                              {[...Array(product.countInStock).keys()].map((x) => (
+                                <option key={x + 1} value={x + 1}>
+                                  {x + 1}
+                                </option>
+                              ))}
+                            </Form.Control>
+                          </Grid>
+                        </Grid>
+                      </ListItem>
+                      <ListItem>
+                        <Grid container>
+                          <Grid item xs={12}>
+                            {/* Adjust the grid item size as needed */}
+                            <Button
+                              onClick={addToCartHandler}
+                              disabled={product.countInStock === 0}
+                              fullWidth
+                              size="large"
+                              style={{ borderRadius: "20px" }}
+                              color="secondary"
+                              variant="contained"
+                            >
+                              Add To Cart
                             </Button>
+                          </Grid>
+                        </Grid>
+                      </ListItem>
                             <Button 
                             onClick={handleGoToShipping}
                             className="btn-block"
